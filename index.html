@@ -1,0 +1,15 @@
+#{extends 'main.html' /}
+#{set title:'｜Top' /}
+
+<h1>ロケーション選択</h1>
+<div class="row">
+  #{list items:location_list, as:'location'}
+  <div class="col-lg-6">
+    <div class="bs-component">
+      <a href="@{selected_location()}?id_of_Location=${location.id}">
+        <div class="alert alert-info text-center">${location.name}</div>
+      </a>
+    </div>
+  </div>
+  #{/list}
+</div>
