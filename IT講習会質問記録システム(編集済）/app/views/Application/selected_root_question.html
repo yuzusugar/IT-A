@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:'｜Top' /}
+
+<h1>質問詳細選択</h1>
+<div class="alert alert-success text-center">${location.name}</div>
+<a href="@{selected_location()}?id_of_Location=${location.id}"><button type="button" class="btn btn-primary">&lt; 質問選択に戻る</button></a>
+<div class="alert alert-success text-center">${qitem_root.question}</div>
+
+%{ int i=0; }%
+
+  #{list items:qitem_list, as:'qitem'}　<!-- アイテムでリストを生成 -->
+  ${i%4 == 0 ? "<div class='row'>".raw() : ''}　<!-- i=4,8ならば行の先頭になる。-->
+  <div class="col-lg-3">
+        <div class="alert alert-info text-center">${qitem.question}
+        <form action="@{add_question_data()}" method="POST">　<!-- 質問dataメゾットを呼び込む -->
+            <input type="hidden" name="fQuestionData.id_of_Location" value="${location.id}" />　<!-- 場所のid(青山か相模原) -->
+            <input type="hidden" name="fQuestionData.id_of_QuestionItem" value="${qitem.id}" />　<!-- 質問dataのid -->
+            <input type="hidden" name="id_of_RootQuestionItem" value="${qitem_root.id}" /> <!-- 親質問のid -->
+
+            <!--
+              <div class="form-group">
+                <input class="form-control" id="name" type="text" name="fQuestionData.comment" value="" placeholder="コメント（オプション）" />
+              </div>
+            -->
+            <button type="submit" class="btn btn-primary">登録</button> <!--上記の場所id,質問dataのid,親質問のidを登録 -->
+
+        </form>
+        </div>
+  </div>
+  ${i%4 == 3||qitem_list.size() -1 == i ?"</div>".raw() : ''}　<!--「i/4の余りが3」または「総質問数＝iになったら」の場合は　//i=0,1,2,3改行 -->
+  %{ i++; }%
+  #{/list}

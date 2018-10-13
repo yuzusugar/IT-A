@@ -1,0 +1,56 @@
+#{extends 'main.html' /}
+#{set title:'UserManager' /}
+
+<h1>プロファイル</h1>
+<form class="form-horizontal" method="POST" action="@{change_profile_by_admin()}" autocomplete="off">
+<input type="hidden" name="fUser.id" value="${user.id}" readonly />
+<table class="table table-condensed table-hover">
+<tbody>
+	<tr>
+		<td>ユーザーID</td>
+		<td>
+			<input type="text" class="form-control" value="${user.user_id}" readonly />
+    </td>
+	</tr>
+	<tr>
+		<td>氏名</td>
+		<td>
+			<input type="text" class="form-control" name="fUser.fullname" value="${user.fullname}" required />
+    </td>
+	</tr>
+	<tr>
+		<td>認証方式</td>
+		<td>
+      <input type="text" class="form-control" value="${user.auth_type}" readonly />
+    </td>
+	</tr>
+#{if user.auth_type.toString() == "Local"}
+	<tr>
+		<td>パスワード変更</td>
+		<td>
+
+		<fieldset>
+			<div class="form-group">
+				<label for="new_pass1" class="col-lg-2 control-label">新しいパスワード</label>
+				<div class="col-lg-10">
+					<input type="password" class="form-control" id="new_pass1" name="new_pass1" value="" autocomplete="off">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="new_pass2" class="col-lg-2 control-label">新しいパスワード（再入力）</label>
+				<div class="col-lg-10">
+					<input type="password" class="form-control" id="new_pass2" name="new_pass2" value="" autocomplete="off">
+				</div>
+			</div>
+		</fieldset>
+
+		</td>
+	</tr>
+#{/if}
+</tbody>
+</table>
+<button type="submit" class="btn btn-primary">変更</button>
+</form>
+#{if user.auth_type.toString() == "ActiveDirectory"}
+<p>パスワード変更は，大学のパスワード変更ウェブで行なってください．</p>
+#{/if}

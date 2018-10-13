@@ -1,0 +1,31 @@
+#{extends 'Secure/layout.html' /}
+
+<div class="container">
+
+	<h1>&{'secure.title'}</h1>
+
+	#{form @authenticate(), class:'form-signin'}
+		<h2 class="form-signin-heading">AIM IT-A 質問記録システム</h2>
+		#{if flash.error}
+			<div class="alert alert-danger">
+				${messages.get(flash.error)}
+			</div>
+		#{/if}
+		#{if flash.success}
+			<div class="alert alert-success">
+				${messages.get(flash.success)}
+			</div>
+		#{/if}
+
+            <label for="inputUserID" class="sr-only">&{'secure.username'}</label>
+            <input type="text" id="inputUserID" class="form-control" name="username" value="${flash.username}" placeholder="User ID" required autofocus>
+            <label for="inputPassword" class="sr-only">&{'secure.password'}</label>
+            <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" name="remember" id="remember" value="true" ${flash.remember ? 'checked="true"' : ''} /> Remember me
+              </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">&{'secure.signin'}</button>
+	#{/form}
+</div>

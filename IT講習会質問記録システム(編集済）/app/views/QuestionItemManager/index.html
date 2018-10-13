@@ -1,0 +1,215 @@
+#{extends 'main.html' /}
+#{set title:'QuestionItemManager' /}
+
+<h1>質問項目管理</h1>
+
+<form action="@{select_Location()}" method="POST" class='form-inline'>
+    <div class="form-group">
+        <select class="form-control" id="id_of_Location" name="id_of_Location">
+            #{list items:location_list, as:'location'}
+            <option value="${location.id}" ${id_of_Location == location.id ? 'selected' : ''}>${location.name} ${location.is_hide ? '(非表示)' : ''}</option>
+            #{/list}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">${id_of_Location == null ? "ロケーション選択" : "ロケーション変更"}</button>
+</form>
+
+<h2>質問項目ツリー</h2>
+<ol>
+    #{list items:qitem_list, as:'qitem_root'}
+    <li><a href="@{edit()}?id_of_QuestionItem=${qitem_root.id}"><i class="glyphicon glyphicon-pencil"></i></a> [${qitem_root.sort_priority}] ${qitem_root.question}
+    	#{if !qitem_root.hasChild()}
+    	${qitem_root.is_comment_field == true ? '' : '[コメントなし]'}
+    	#{/if}
+        <ol>
+            #{list items:qitem_root.getChild(), as:'qitem'}
+            <li>
+            	<a href="@{edit()}?id_of_QuestionItem=${qitem.id}"><i class="glyphicon glyphicon-pencil"></i></a> [${qitem.sort_priority}] ${qitem.question}
+            	${qitem.is_comment_field == true ? '' : '[コメントなし]'}
+            </li>
+            #{/list}
+        </ol>
+    </li>
+    #{/list}
+</ol>
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2>作成</h2>
+        #{if id_of_Location != null}        
+        <h3>質問項目</h3>
+            <form action="@{create()}" method="POST">
+                <input type='hidden' name='id_of_Location' value='${id_of_Location}' />
+                <div class="form-group">
+                    <label class="control-label" for="id_of_Parent">親項目</label>
+                    <select class="form-control" id="id_of_Parent" name="id_of_Parent">
+                        <option value="0">ー</option>
+                        #{list items:qitem_list, as:'qitem_root'}
+                        <option value="${qitem_root.id}">${qitem_root.question}</option>
+                        #{/list}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="question">質問項目</label>
+                    <textarea class="form-control" id="question" style="width:100%" rows="10" name="questions"></textarea>
+                    <p class="help-block">質問タイトルを改行区切りで入力してください。</p>
+                    <p class="help-block">親項目%,%質問項目で一括インポートできます。</p>
+                </div>
+                <button type="submit" class="btn btn-primary">作成</button>
+            </form>
+        #{/if}
+        #{else}
+        <p>ロケーションを選択してください</p>
+        #{/else}
+    </div>
+
+    <div class="col-lg-6">
+        <h3>従来の質問項目一括インポート用</h3>
+        <textarea class="form-control" rows="3" readonly>基本操作%,%ウィンドウの操作
+基本操作%,%Windowsでのファイル管理
+基本操作%,%アプリ中でのファイル操作
+基本操作%,%文字列の入力・編集
+基本操作%,%文字列の検索・修正機能の
+基本操作%,%ページ設定
+基本操作%,%印刷プレビュー
+基本操作%,%Webブラウザの操作
+基本操作%,%インターネットでの情報検索
+基本操作%,%ファイルの解凍
+基本操作%,%ファイルのダウンロード
+基本操作%,%用紙サイズの変更
+基本操作%,%置換機能
+基本操作%,%拡張子
+文書作成%,%行及び段落の間隔の設定
+文書作成%,%文字列のインデントを設定
+文書作成%,%箇条書きや段落番号の設定
+文書作成%,%特殊な文字列の挿入
+文書作成%,%タブの使用
+文書作成%,%改ページ・セクション区切り
+文書作成%,%ページ番号
+文書作成%,%ヘッダー・フッター
+文書作成%,%脚注や文末脚注の挿入
+文書作成%,%文字列や段落への書式設定
+文書作成%,%文章校正機能の使用
+文書作成%,%段組設定
+文書作成%,%表の作成・編集
+文書作成%,%罫線と網掛けの設定
+文書作成%,%見出しスタイルの作成
+文書作成%,%図形の編集
+文書作成%,%表　列行の削除
+文書作成%,%グラフの貼り付け
+文書作成%,%日付の挿入
+文書作成%,%文字カウント
+文書作成%,%用紙サイズの変更
+文書作成%,%折り返しの設定
+文書作成%,%置換機能
+文書作成%,%字下げの設定
+文書作成%,%図の挿入
+文書作成%,%フォントの設定
+表計算%,%データの入力と編集
+表計算%,%表の構成と変更
+表計算%,%数字の表示形式
+表計算%,%セルへの罫線・網掛け設定
+表計算%,%セル内の配置設定
+表計算%,%条件付書式設定
+表計算%,%形式を選択して貼り付け
+表計算%,%データの並び替え
+表計算%,%オートフィルタ
+表計算%,%ピボットテーブルの利用
+表計算%,%相対参照
+表計算%,%絶対参照
+表計算%,%数式の入力
+表計算%,%SUM関数
+表計算%,%AVERAGE関数
+表計算%,%MAX　MIN関数
+表計算%,%IF関数
+表計算%,%IF-IF関数
+表計算%,%IF-AND　IF-OR関数
+表計算%,%RANK関数
+表計算%,%TODAY関数
+表計算%,%四則演算と関数の組合わせ
+表計算%,%エラー対処
+表計算%,%グラフの作成・書式設定
+表計算%,%複合グラフ
+表計算%,%ピクセルについて
+表計算%,%セルの挿入
+表計算%,%シートの移動・コピー・挿入
+表計算%,%IF-SUM関数
+表計算%,%行の高さ・列の幅
+表計算%,%文字を折り返して表示
+表計算%,%セルの分割
+表計算%,%列・行の挿入
+表計算%,%グラフ削除
+プレゼンテーション%,%テキストボックスの説明
+プレゼンテーション%,%クリップアートの検索
+プレゼンテーション%,%フッター・スライド番号・日付
+プレゼンテーション%,%図の挿入
+プレゼンテーション%,%ハイパーリンク
+プレゼンテーション%,%アニメーション
+プレゼンテーション%,%画面の切り替え
+プレゼンテーション%,%グループ化
+プレゼンテーション%,%スライドマスタ
+プレゼンテーション%,%配置順
+プレゼンテーション%,%リストのレベル
+プレゼンテーション%,%段落番号
+プレゼンテーション%,%オブジェクト操作
+プレゼンテーション%,%テーマ設定
+プレゼンテーション%,%ノート
+プレゼンテーション%,%スライドの設定変更
+プレゼンテーション%,%図のグラデーション
+プレゼンテーション%,%表の挿入
+プレゼンテーション%,%スライドショー
+プレゼンテーション%,%レイアウトの変更
+プレゼンテーション%,%ファイル新規作成
+プレゼンテーション%,%塗りつぶしの設定
+プレゼンテーション%,%図の回転
+プレゼンテーション%,%オブジェクトの位置設定
+プレゼンテーション%,%図のサイズ
+プレゼンテーション%,%図形の効果設定
+プレゼンテーション%,%フォント設定
+総合問題%,%IF-SUM関数
+総合問題%,%複合グラフ
+総合問題%,%シートの移動とコピー・挿入
+総合問題%,%オートフィルタ
+総合問題%,%数式の入力
+総合問題%,%見出しスタイルの作成
+総合問題%,%改ページ・セクション区切り
+総合問題%,%文字列のインデントを設定
+総合問題%,%字下げの設定
+総合問題%,%箇条書きや段落番号の設定
+総合問題%,%フォントの設定(word）
+総合問題%,%罫線と網掛けの設定(word)
+総合問題%,%表の作成・編集
+総合問題%,%グラフの貼り付け(word）
+総合問題%,%段組設定
+総合問題%,%ページ番号(word）
+総合問題%,%フッター・スライド番号・日付
+総合問題%,%リストのレベル
+総合問題%,%スライドの設定変更
+総合問題%,%図のグラデーション
+総合問題%,%グラフの貼り付け(ppt）
+総合問題%,%グループ化
+総合問題%,%アニメーション
+総合問題%,%テキストボックスの説明
+総合問題%,%ハイパーリンク
+総合問題%,%図の挿入
+総合問題%,%配置順
+総合問題%,%上書き保存
+総合問題%,%Windowsでのファイル管理
+その他%,%修了証
+その他%,%スキルチェックの使い方
+その他%,%荷物おきっぱ
+その他%,%文字打てない対応
+その他%,%問題非表示エラー
+その他%,%ログオフ忘れ
+その他%,%複数箇所の選択（Ctrlキー）
+その他%,%見本参照
+その他%,%ログインの不可
+その他%,%IT-Aについて
+その他%,%ネチケットについて
+その他%,%フリーズ対応
+その他%,%ワンデイパス
+その他%,%飲食禁止
+その他%,%メールの送り方
+その他%,%その他（自由記入）</textarea>
+        <p class='help-block'>親項目は"－"を選択し，質問項目に上記内容をコピペしてください．</p>
+    </div></div>

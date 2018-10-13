@@ -1,0 +1,50 @@
+#{extends 'main.html' /}
+#{set title:'SystemManager' /}
+
+<h1>システム管理</h1>
+
+<h2>ActiveDirectory接続設定&nbsp;
+  <span style="font-size:50%;" class="label ${sc.is_ldap_test_passed ? "label-success" : "label-danger"}">
+    テスト：${sc.is_ldap_test_passed}
+  </span>
+</h2>
+
+<form class="form-horizontal" action="@{save_ldap()}" method="POST" autocomplete="off">
+<table class="table table-condensed table-hover">
+  <tbody>
+  	<tr>
+  		<td>PROVIDER_URL</td>
+  		<td>
+  			<input type="text" class="form-control" name="sc.LDAP_PROVIDER_URL" value="${sc.LDAP_PROVIDER_URL}" required />
+      </td>
+  	</tr>
+  	<tr>
+  		<td>PRINCIPAL</td>
+  		<td>
+  			<input type="text" class="form-control" name="sc.LDAP_PRINCIPAL" value="${sc.LDAP_PRINCIPAL}" required />
+      </td>
+  	</tr>
+  </tbody>
+</table>
+<button type="submit" class="btn btn-primary">保存</button>
+</form>
+<h3>接続テスト</h3>
+<form class="form-horizontal" action="@{test_ldap()}" method="POST" autocomplete="off">
+<table class="table table-condensed table-hover">
+  <tbody>
+  	<tr>
+  		<td>USERNAME</td>
+  		<td>
+  			<input type="text" class="form-control" name="username" value="" required />
+      </td>
+  	</tr>
+  	<tr>
+  		<td>PASSWORD</td>
+  		<td>
+  			<input type="password" class="form-control" name="password" value="" required />
+      </td>
+  	</tr>
+  </tbody>
+</table>
+<button type="submit" class="btn btn-primary">テスト</button>
+</form>

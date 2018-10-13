@@ -1,0 +1,27 @@
+#{extends 'main.html' /}　//mainページへのリンク
+#{set title:'｜Top' /}
+
+<h1>質問詳細選択</h1>
+<div class="alert alert-success text-center">$(location.name)</div>
+<a href="@{selected_location()}?id_of_Location=${location.id}"><button type="button" class="btn btn-primary">&lt; 質問選択に戻る</button></a>
+<div class="alert alert-success text-center">${qitem_root?.question}／${qData.getQuestionItem().question}</div>
+
+<div class='panel panel-info'>
+    <div class='panel-heading'>質問を記録しました</div>
+    <div class='panel-body'>特筆する事項がございましたら、コメントも登録してください。</div>
+</div>
+
+<form action="@{add_comment()}" method="POST"> <!-- コメント登録のメゾットを呼び出す-->
+    <input type="hidden" name="id_of_QuestionData" value="${qData.id}" />　<!-- 学生番号を送る。(非表示) id_of_QuestionDataをqData.idとして送る　　-->
+    <div class="form-group">
+        <input class="form-control" id="comment" type="text" name="comment" value="${qData.comment}" placeholder="コメント（オプション）" />　
+        <!-- コメント用のフォームを作成。　（input type="text"）は、一行のテキストボックスを生成する。 valueはcommntのdataという属性
+        // placeholderを使えば、入力欄に初期表示する内容を指定することができます-->
+    </div>
+    <button type="submit" class="btn btn-primary">コメント登録（任意）</button>　<!--フォームに入力されたコメントを登録する。-->
+</form>
+<hr/>
+<form action="@{cancel_add_question_data()}" method="POST"> <!-- コメントキャンセルのcgiを呼び込む -->
+    <input type="hidden" name="id_of_QuestionData" value="${qData.id}" /> <!-- id_of_QuestionDataをqData.idとして送る -->
+    <button type="submit" class="btn btn-danger">登録キャンセル</button>　<!-- 直前に登録された質問dataを削除する。 -->
+</form>

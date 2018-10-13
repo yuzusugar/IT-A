@@ -1,0 +1,71 @@
+#{extends 'main.html' /}
+#{set title:'PermissionManager' /}
+
+<h1>操作権限管理</h1>
+
+<h2>リスト</h2>
+<table class="table table-striped table-hover" id="permit_list_table">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>ユーザーID（氏名）</th>
+            <th>権限</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:user_list, as:'user'}
+        <tr>
+            <td>${user.id}</td>
+            <td>${user.user_id}（${user.fullname}）</td>
+            <td>
+                #{if user.user_id == "admin"}
+                    全権限
+                #{/if}
+                #{else}
+                    <form action="@{delete()}" method="POST" class="form-inline">
+                        <input type="hidden" name="fPermission.user_id" value="${user.user_id}" />
+                    #{list items:user.getPermissionList(), as:'permit'}
+                        <button type="submit" class="label label-primary" onClick="return deletePermit()" name="fPermission.permit_op" value="${permit.permit_op}">${permit.permit_op}</button>
+                    #{/list}
+                    </form>
+                #{/else}
+            </td>
+            <td>
+                #{if user.user_id != "admin" && models.Permission.getDenyListByUserID(user.user_id).size() > 0}
+                <form action="@{add()}" method="POST" class=”form-inline”>
+                    <div class="form-group">
+                        <input type="hidden" name="fPermission.user_id" value="${user.user_id}" />
+                        <select class="form-control input-sm" name="fPermission.permit_op">
+                            #{list items:models.Permission.getDenyListByUserID(user.user_id), as:'permit_op'}
+                            <option>${permit_op}</option>
+                            #{/list}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm">追加</button>
+                </form>
+                #{/if}
+            </td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+<script>
+    function deletePermit(){
+        if(window.confirm("本当に削除しますか？")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.js"></script>
+
+<script>
+    jQuery(function($){
+    $("#permit_list_table").DataTable();
+    });
+</script>

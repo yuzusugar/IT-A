@@ -1,0 +1,57 @@
+#{extends 'main.html' /}
+#{set title:'QuestionItemManager' /}
+
+<h1>質問項目管理</h1>
+<a href="@{index()}"><button type="button" class="btn btn-primary">&lt; 一覧に戻る</button></a>
+<h2>質問項目編集</h2>
+<form action="@{edit_save()}" method="POST">
+    <input type="hidden" name="fQuestionItem.id" value="${qitem.id}" />
+    <div class="form-group">
+        <label class="control-label" for="id_of_Parent">親項目</label>
+        <select class="form-control" id="id_of_Parent" name="fQuestionItem.id_of_Parent">
+            <option value="0" ${qitem.id_of_Parent == 0 ? 'selected' : ''}>親項目</option>
+            #{list items:qitem_list, as:'qitem_root'}
+            <option value="${qitem_root.id}" ${qitem.id_of_Parent == qitem_root.id ? 'selected' : ''}>${qitem_root.question}</option>
+            #{/list}
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="question">質問項目</label>
+        <input class="form-control" id="question" type="text" name="fQuestionItem.question" value="${qitem.question}" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="sort_priority">質問並びの重み（昇順に並びます）</label>
+        <input class="form-control" id="sort_priority" type="number" name="fQuestionItem.sort_priority" value="${qitem.sort_priority}" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="is_comment_field">コメント欄</label>
+        <label class="radio-inline">
+        <input id="is_comment_field" type="radio" name="fQuestionItem.is_comment_field" value="true" ${qitem.is_comment_field == true ? 'checked' : ''} />あり
+        </label>
+        ／
+        <label class="radio-inline">
+        <input id="is_comment_field" type="radio" name="fQuestionItem.is_comment_field" value="false" ${qitem.is_comment_field == false ? 'checked' : ''} />なし
+        </label>
+    </div>
+    <div class="form-group">
+        <label class="control-label" for="is_hide">表示／非表示</label>
+        <label class="radio-inline">
+        <input id="is_hide" type="radio" name="fQuestionItem.is_hide" value="false" ${qitem.is_hide == false ? 'checked' : ''} />表示
+        </label>
+        ／
+        <label class="radio-inline">
+        <input id="is_hide" type="radio" name="fQuestionItem.is_hide" value="true" ${qitem.is_hide == true ? 'checked' : ''} />非表示
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary">保存</button>
+</form>
+
+<script>
+    function deletePermit(){
+        if(window.confirm("本当に削除しますか？")){
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>

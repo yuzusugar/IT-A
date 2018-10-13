@@ -1,0 +1,130 @@
+#{extends 'main.html' /}
+#{set title:'QuestionHistory' /}
+
+<h1>質問履歴</h1>
+<p>最新100件の履歴です</p>
+<table class="table table-striped table-hover" id="question_data_table">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>ロケーション</th>
+            <th>時刻</th>
+            <th>質問</th>
+            <th>質問詳細</th>
+            <th>コメント</th>
+            #{if controllers.Security.getSigninUser().isAnyAdmin()}
+            <th>登録者</th>
+            <th>IPアドレス</th>
+            #{/if}
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:qData_list, as:'qData'}
+        <tr>
+            <td>${qData.id}</td>
+            <td>${qData.getLocation().name}</td>
+            <td>${qData.timestamp.format("yyyy/MM/dd(EEE) HH:mm", "ja")}</td>
+            <td>${qData.getQuestionItem().getParent()?.question}</td>
+            <td>${qData.getQuestionItem().question}</td>
+            <td>${qData.comment}</td>
+            #{if controllers.Security.getSigninUser().isAnyAdmin()}
+            <td>${qData.getUser().user_id} ${qData.getUser().fullname}</td>
+            <td>${qData.remoteAddress}</td>
+            #{/if}
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+
+#{if controllers.Security.getSigninUser().isAnyAdmin()}
+<h2>質問履歴（月単位）</h2>
+<div class="row">
+<form action="@{index_month()}" method="POST">
+    <div class="form-group col-lg-4">
+        <select class="form-control" name="yyyymm">
+            #{list items:yyyymm_list, as:'ym'}
+            <option ${ym == yyyymm ? 'selected' : ''}>${ym}</option>
+            #{/list}
+        </select>
+    </div>
+
+    <div class="form-group col-lg-4">
+        <select class="form-control" name="id_of_Location">
+            #{list items:location_list, as:'location'}
+            <option ${location.id == id_of_Location ? 'selected' : ''} value="${location.id}">${location.name}</option>
+            #{/list}
+        </select>
+    </div>
+    <div class=" col-lg-4">
+    <button type="submit" class="btn btn-primary">切り替え</button>
+    </div>
+</form>
+    </div>
+#{if qData_month_list != null && qData_month_list.size() > 0}
+<table class="table table-striped table-hover" id="question_month_data_table">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>ロケーション</th>
+            <th>時刻</th>
+            <th>質問</th>
+            <th>質問詳細</th>
+            <th>コメント</th>
+            #{if controllers.Security.getSigninUser().isAnyAdmin()}
+            <th>登録者</th>
+            <th>IPアドレス</th>
+            #{/if}
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:qData_month_list, as:'qData'}
+        <tr>
+            <td>${qData.id}</td>
+            <td>${qData.getLocation().name}</td>
+            <td>${qData.timestamp.format("yyyy/MM/dd(EEE) HH:mm", "ja")}</td>
+            <td>${qData.getQuestionItem().getParent()?.question}</td>
+            <td>${qData.getQuestionItem().question}</td>
+            <td>${qData.comment}</td>
+            #{if controllers.Security.getSigninUser().isAnyAdmin()}
+            <td>${qData.getUser().user_id} ${qData.getUser().fullname}</td>
+            <td>${qData.remoteAddress}</td>
+            #{/if}
+        </tr>
+        #{/list}
+    </tbody>
+</table>
+<form action="@{download_csv()}" method="POST">
+    <input type="hidden" name="yyyymm" value="${yyyymm}" />
+    <input type="hidden" name="id_of_Location" value="${id_of_Location}" />
+    <button type="submit" class="btn btn-primary">CSVダウンロード</button>
+</form>
+#{/if}
+#{/if}
+
+#{if controllers.Security.getSigninUser().user_id == "admin"}
+<h2>質問データインポート</h2>
+<form action="@{history_import()}" method="POST">
+    <div class="form-group">
+        <label class="control-label" for="question_history">CSVデータ</label>
+        <textarea class="form-control" id="question_history" style="width:100%" rows="10" name="question_history"></textarea>
+        <p class="help-block">形式：日時（YYYY/MM/DD HH:mm）,ロケーション,質問詳細</p>
+        <p class="help-block">IPアドレスは127.0.0.1，登録者はadminとなります．</p>
+    </div>
+    <button type="submit" class="btn btn-primary">インポート</button>
+</form>
+#{/if}
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.js"></script>
+
+<script>
+    jQuery(function($){
+    $("#question_data_table").DataTable({
+    "order": [[ 2, "desc" ]]
+    });
+    $("#question_month_data_table").DataTable({
+    "order": [[ 2, "desc" ]]
+    });
+    });
+</script>
