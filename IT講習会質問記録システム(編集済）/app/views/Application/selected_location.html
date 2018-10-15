@@ -58,7 +58,8 @@
             <th>質問</th>
             <th>質問詳細</th>
             <th>コメント</th>
-        </tr>
+            <th>対応時間</th>
+	    </tr>
     </thead>
     <tbody>
         #{list items:qData_list, as:'qData'}
@@ -68,6 +69,7 @@
             <td>${qData.getQuestionItem().getParent()?.question}</td>　<!-- 親項目 -->
             <td>${qData.getQuestionItem().question}</td>　<!-- 質問項目 -->
             <td>${qData.comment}</td>　<!-- コメント -->
+            <td>${qData.time}</td>　<!-- コメント -->
         </tr>
         #{/list}
     </tbody>
