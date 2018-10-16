@@ -97,17 +97,17 @@ public class QuestionHistory extends Controller {
         Location location = Location.findById(id_of_Location);
 
         StringBuffer sb = new StringBuffer();
-        sb.append("No,ロケーション,時刻,質問,質問詳細,コメント,登録者,IPアドレス\n");
+        sb.append("No,ロケーション,時刻,質問,質問詳細,コメント,対応時間,登録者,IPアドレス\n");
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         for (QuestionData qData : qData_month_list) {
             QuestionItem qItem = QuestionItem.findById(qData.id_of_QuestionItem);
-            QuestionItem qItemParent = QuestionItem.findById(qItem.id_of_Parent);
+            QuestionItem qItemParent = QestionItem.findById(qItem.id_of_Parent);
             if(qData.comment == null){ qData.comment = ""; }
-            String parentQuestion = "-";
+            String parentQuestion = "-";u
             if(qItemParent != null){
             	parentQuestion = qItemParent.question;
             }
-            sb.append(qData.id + "," + location.name + "," + dateTimeFormat.format(qData.timestamp) + "," + parentQuestion + "," + qItem.question + "," + qData.comment + "," + qData.user_id + "," + qData.remoteAddress + "\n");
+            sb.append(qData.id + "," + location.name + "," + dateTimeFormat.format(qData.timestamp) + "," + parentQuestion + "," + qItem.question + "," + qData.comment + "," + qData.time+"," + qData.user_id + "," + qData.remoteAddress + "\n");
         }
 
         Calendar cal_now = Calendar.getInstance();
