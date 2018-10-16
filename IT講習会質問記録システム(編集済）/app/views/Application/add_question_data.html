@@ -14,6 +14,7 @@
 <form action="@{add_comment()}" method="POST"> <!-- コメント登録のメゾットを呼び出す-->
     <input type="hidden" name="id_of_QuestionData" value="${qData.id}" />　<!-- 学生番号を送る。(非表示) id_of_QuestionDataをqData.idとして送る　　-->
     <div class="form-group">
+  　
         <input class="form-control" id="comment" type="text" name="comment" value="${qData.comment}" placeholder="コメント（オプション）" />　
         <!-- コメント用のフォームを作成。　（input type="text"）は、一行のテキストボックスを生成する。 valueはcommntのdataという属性 -->
         <!-- placeholderを使えば、入力欄に初期表示する内容を指定することができます-->
