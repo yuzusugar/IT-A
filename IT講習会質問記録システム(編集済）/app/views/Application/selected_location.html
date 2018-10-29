@@ -25,7 +25,7 @@
 	<div class="col-lg-4">
 		<div class="bs-component">
 
-			#{if qitem.hasChild()}　//子を持っていれば　<!-- 質問選択(大項目)の画面 -->
+			#{if qitem.hasChild()}　<!--子を持っていれば-->　<!-- 質問選択(大項目)の画面 -->
 				<a href="@{selected_root_question()}?id_of_Location=${location.id}&id_of_QuestionItem=${qitem.id}">　<!-- 親項目を選ぶ -->
 					<div class="alert alert-info text-center">${qitem.question}</div>　
 				</a>
@@ -33,7 +33,7 @@
 
 			#{else}　/<!-- //質問詳細選択の画面。-->
 				<div class="alert alert-info text-center">${qitem.question}
-					<form action="@{add_question_data()}" method="POST">　<!-- 質問データを呼ぶ。　「ウィンドウの操作」etc....-->
+					<form action="@{add_question_data()}" method="POST">　<!-- 質問追加メゾットを呼び出す「ウィンドウの操作」etc....-->
 						<input type="hidden" name="fQuestionData.id_of_Location" value="${location.id}" />　<!--場所を送る -->
 						<input type="hidden" name="fQuestionData.id_of_QuestionItem" value="${qitem.id}" />　<!-- 質問項目を送る -->
 						<input type="hidden" name="id_of_RootQuestionItem" value="${qitem.id}" />　<!-- 親項目を送る -->
@@ -58,7 +58,8 @@
             <th>質問</th>
             <th>質問詳細</th>
             <th>コメント</th>
-        </tr>
+            <th>対応時間</th>
+	    </tr>
     </thead>
     <tbody>
         #{list items:qData_list, as:'qData'}
@@ -68,6 +69,7 @@
             <td>${qData.getQuestionItem().getParent()?.question}</td>　<!-- 親項目 -->
             <td>${qData.getQuestionItem().question}</td>　<!-- 質問項目 -->
             <td>${qData.comment}</td>　<!-- コメント -->
+            <td>${qData.time}</td>　<!-- 対応時間-->
         </tr>
         #{/list}
     </tbody>
