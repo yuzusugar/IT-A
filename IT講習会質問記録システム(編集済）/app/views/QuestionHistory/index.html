@@ -13,6 +13,7 @@
             <th>質問詳細</th>
             <th>コメント</th>
             <th>対応時間</th>
+            <th>ガイドブックの訂正点</th>
             #{if controllers.Security.getSigninUser().isAnyAdmin()}
             <th>登録者</th>
             <th>IPアドレス</th>
@@ -29,6 +30,7 @@
             <td>${qData.getQuestionItem().question}</td>
             <td>${qData.comment}</td>
             <td>${qData.time}</td>
+             <td>${qData.guide}</td>
             #{if controllers.Security.getSigninUser().isAnyAdmin()}
             <td>${qData.getUser().user_id} ${qData.getUser().fullname}</td>
             <td>${qData.remoteAddress}</td>
@@ -73,6 +75,7 @@
             <th>質問詳細</th>
             <th>コメント</th> //追加
             <th>対応時間</th>
+            <th>ガイドブックの修正点</th>
             #{if controllers.Security.getSigninUser().isAnyAdmin()}
             <th>登録者</th>
             <th>IPアドレス</th>
@@ -89,6 +92,7 @@
             <td>${qData.getQuestionItem().question}</td>
             <td>${qData.comment}</td>
             <td>${qData.time}</td>　//追加
+            <td>${qData.guide}</td> //追加
             #{if controllers.Security.getSigninUser().isAnyAdmin()}
             <td>${qData.getUser().user_id} ${qData.getUser().fullname}</td>
             <td>${qData.remoteAddress}</td>
