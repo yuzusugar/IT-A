@@ -14,32 +14,15 @@
 <form action="@{add_comment()}" method="POST"> <!-- コメント登録のメゾットを呼び出す-->
     <input type="hidden" name="id_of_QuestionData" value="${qData.id}" />　<!-- 学生番号を送る。(非表示) -->
 
-<div class='panel panel-info'>
- <div class="panel-heading">ガイドブックの説明は適切ですか？</div>
-
-          <div class="form-group">
-              <div class="radio">
-        		        <label>
-        				    <input type="radio" name="radioA" value="radioA"> 適切/ガイドブックを使用していない
-        		        </label>
-            </div>
-      　   <div class="radio">
-        		        <label>
-                          <input type="radio" name="radioA" value="radioB"> 不適切(コメントに詳細を記入)
-        		       </label>
-          </div>
-　　　</div>
-
-</div>
-      <!-- コメント用のフォームを作成。　（input type="text"）は、一行のテキストボックスを生成する。 valueはcommntのdataという属性
-      // placeholderを使えば、入力欄に初期表示する内容を指定することができます-->
       <div class="form-group">
-      <input class="form-control" id="comment" type="text" name="comment" value="${qData.comment}" placeholder="コメント（オプション）" />
+      <input class="form-control" id="guide" type="text" name="guide" value="${qData.guide}" placeholder="ガイドブック" />
+      <br>
       <input class="form-control" id="time" type="text" name="time" value="${qData.time}" placeholder="対応時間" />
+      <br>
+      <input class="form-control" id="comment" type="text" name="comment" value="${qData.comment}" placeholder="コメント（オプション）" />
      </div>
 
-
-    <button type="submit" class="btn btn-primary">コメント登録（任意）</button>　<!--フォームに入力されたコメントを登録する。-->
+    <button type="submit" class="btn btn-primary">登録</button>　<!--フォームに入力されたコメントを登録する。-->
 </form>
 <hr/>
 <form action="@{cancel_add_question_data()}" method="POST"> <!-- コメントキャンセルのcgiを呼び込む -->
