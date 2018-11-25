@@ -24,7 +24,10 @@ public class QuestionData extends Model {
     public String comment = "";
     
     @Required
-    public Long time;
+    public String time ="";
+    
+    @Required
+    public String guide ="";
 
     @Required
     public String remoteAddress;
@@ -40,7 +43,8 @@ public class QuestionData extends Model {
         this.id_of_Location = fQuestionData.id_of_Location;
         this.user_id = user_id;
         this.comment = fQuestionData.comment;
-        this.time = fQuestionData.time;       
+        this.time = fQuestionData.time;
+        this.question =fQuestionData.question;
         this.remoteAddress = remoteAddress;
         this.timestamp = Calendar.getInstance().getTime();
     }
@@ -51,6 +55,7 @@ public class QuestionData extends Model {
         this.user_id = user_id;
         this.comment = comment;
         this.time = time;
+        this.guide = guide;
         this.remoteAddress = remoteAddress;
     }
 
