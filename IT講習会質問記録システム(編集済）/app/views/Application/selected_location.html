@@ -59,23 +59,25 @@
             <th>質問詳細</th>
             <th>コメント</th>
             <th>対応時間</th>
+	    <th>ガイドブックの修正点</th>
 	    </tr>
     </thead>
     <tbody>
         #{list items:qData_list, as:'qData'}
         <tr>
             <td>${qData.id}</td>　<!-- 学生番号 -->
-            <td>${qData.timestamp.format("yyyy/MM/dd HH:mm")}</td>　<!-- 生年月日 -->
+            <td>${qData.timestamp.format("yyyy/MM/dd HH:mm")}</td>　<!-- 年月日 -->
             <td>${qData.getQuestionItem().getParent()?.question}</td>　<!-- 親項目 -->
             <td>${qData.getQuestionItem().question}</td>　<!-- 質問項目 -->
             <td>${qData.comment}</td>　<!-- コメント -->
             <td>${qData.time}</td>　<!-- 対応時間-->
+	    <td>${qData.guide}</td>　<!-- 対応時間-->
         </tr>
         #{/list}
     </tbody>
 </table>
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.css"/> <!-- ここをいじれば -->UI設計は変えられる？？
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.css"/> 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.js"></script>
 
 <script>
