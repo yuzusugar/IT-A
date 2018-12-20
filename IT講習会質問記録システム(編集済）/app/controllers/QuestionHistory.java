@@ -101,9 +101,9 @@ public class QuestionHistory extends Controller {
         DateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         for (QuestionData qData : qData_month_list) {
             QuestionItem qItem = QuestionItem.findById(qData.id_of_QuestionItem);
-            QuestionItem qItemParent = QestionItem.findById(qItem.id_of_Parent);
+            QuestionItem qItemParent = QuestionItem.findById(qItem.id_of_Parent);
             if(qData.comment == null){ qData.comment = ""; }
-            String parentQuestion = "-";u
+            String parentQuestion = "-";
             if(qItemParent != null){
             	parentQuestion = qItemParent.question;
             }
@@ -138,11 +138,12 @@ public class QuestionHistory extends Controller {
                 Date date = dateTimeFormat.parse(csv[0]);
                 QuestionItem qItem = QuestionItem.find("byQuestion", csv[2]).first();
                 Location location = Location.find("byName", csv[1]).first();
+                Long time = Long.parseLong(csv[3]);
                 if (qItem == null || location == null) {
                     throw new Exception("質問が不明．または場所が不明");
                 }
 
-                new QuestionData(date, qItem.id, location.id, "admin", "", "127.0.0.1").save();
+                new QuestionData(date, qItem.id, location.id, "admin", "", time, "127.0.0.1").save();
             } catch (Exception ex) {
                 error_list.add(line);
             }
