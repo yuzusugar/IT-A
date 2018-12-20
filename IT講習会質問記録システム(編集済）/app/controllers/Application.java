@@ -11,19 +11,19 @@ import models.*;
 public class Application extends Controller {
 
     public static void index() {
-      List<Location> location_list = Location.getActiveList();　//location_listにLocation.getActiveList()を代入
-      render(location_list);　//location_listを受けわたす
+      List<Location> location_list = Location.getActiveList(); //location_listにLocation.getActiveList()を代入
+      render(location_list); //location_listを受けわたす
     }
 
     public static void selected_location(Long id_of_Location){
         Location location = Location.findById(id_of_Location);
-        List<QuestionItem> qitem_list = QuestionItem.getRoot(id_of_Location);　//QuestionItemに親リストを代入
+        List<QuestionItem> qitem_list = QuestionItem.getRoot(id_of_Location); //QuestionItemに親リストを代入
 
-        List<QuestionData> qData_list = QuestionData.getLatestListByLocation(id_of_Location);　//QuestionDataに最新のLicatonを代入
+        List<QuestionData> qData_list = QuestionData.getLatestListByLocation(id_of_Location); //QuestionDataに最新のLicatonを代入
 
         // コメント登録後の遷移か？
         if(session.get("id_of_QuestionData") != null){
-            renderArgs.put("id_of_QuestionData", session.get("id_of_QuestionData"));　
+            renderArgs.put("id_of_QuestionData", session.get("id_of_QuestionData"));
             session.remove("id_of_QuestionData");
         }
 
@@ -42,7 +42,7 @@ public class Application extends Controller {
         Location location = Location.findById(id_of_Location);
         QuestionItem qitem_root = QuestionItem.findById(id_of_QuestionItem);
         List<QuestionItem> qitem_list = qitem_root.getChild();
-        render(location, qitem_root, qitem_list);　//ロケーション、親項目、詳細項目を送る
+        render(location, qitem_root, qitem_list); //ロケーション、親項目、詳細項目を送る
     }
 
     public static void add_question_data(QuestionData fQuestionData, Long id_of_RootQuestionItem){
@@ -65,7 +65,7 @@ public class Application extends Controller {
         QuestionData qData = QuestionData.findById(id_of_QuestionData);
         Location location = Location.findById(qData.id_of_Location);
         QuestionItem qitem_root = qData.getQuestionItem().getParent();
-        renderTemplate("Application/add_question_data.html", location, qitem_root, qData);　//add_question_data.html.
+        renderTemplate("Application/add_question_data.html", location, qitem_root, qData); //add_question_data.html.
     }
 
     public static void add_comment(Long id_of_QuestionData, String comment){
