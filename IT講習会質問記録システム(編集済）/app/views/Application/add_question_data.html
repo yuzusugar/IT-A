@@ -24,7 +24,7 @@
 
     <button type="submit" class="btn btn-primary">登録</button>　<!--フォームに入力されたコメントを登録する。-->
 </form>
-<hr/>
+
 <form action="@{cancel_add_question_data()}" method="POST"> <!-- コメントキャンセルのcgiを呼び込む -->
     <input type="hidden" name="id_of_QuestionData" value="${qData.id}" /> <!-- 学生番号を送る(非表示)-->
     <button type="submit" class="btn btn-danger">登録キャンセル</button>　<!-- 直前に登録された質問dataを削除する。 -->
