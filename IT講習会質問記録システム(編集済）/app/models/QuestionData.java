@@ -31,6 +31,7 @@ public class QuestionData extends Model {
 
     @Required
     public String question = "";// どんな値を入れようとしているのか，ソースコードからは読み取れませんでした．質問項目の名称ですか？ by HiroshiMARUYAMA
+                                // ガイドブックの評価を入れようとしていました。　by　
 
     @Required
     public String remoteAddress;
