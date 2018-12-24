@@ -30,10 +30,6 @@ public class QuestionData extends Model {
     public String guide ="";
 
     @Required
-    public String question = "";// どんな値を入れようとしているのか，ソースコードからは読み取れませんでした．質問項目の名称ですか？ by HiroshiMARUYAMA
-                                // ガイドブックの評価を入れようとしていました。　by　
-
-    @Required
     public String remoteAddress;
 
     @Required
@@ -48,10 +44,12 @@ public class QuestionData extends Model {
         this.user_id = user_id;
         this.comment = fQuestionData.comment;
         this.time = fQuestionData.time;
-        this.question =fQuestionData.question;
+        this.guide =fQuestionData.guide;
         this.remoteAddress = remoteAddress;
         this.timestamp = Calendar.getInstance().getTime();
     }
+
+    // CSVからのインポート用
     public QuestionData(Date timestamp, Long id_of_QuestionItem, Long id_of_Location, String user_id, String comment, Long time ,String remoteAddress){
         this.timestamp = timestamp;
         this.id_of_QuestionItem = id_of_QuestionItem;

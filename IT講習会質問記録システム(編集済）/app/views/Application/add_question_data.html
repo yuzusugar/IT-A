@@ -12,19 +12,20 @@
 </div>
 
 <form action="@{add_comment()}" method="POST"> <!-- コメント登録のメゾットを呼び出す-->
-    <input type="hidden" name="id_of_QuestionData" value="${qData.id}" />　<!-- 学生番号を送る。(非表示) -->
+    <input type="hidden" name="id_of_QuestionData" value="${qData.id}" /> <!-- 学生番号を送る。(非表示) -->
 
       <div class="form-group">
-      <input class="form-control" id="guide" type="text" name="guide" value="${qData.guide}" placeholder="ガイドブック" />
+      <input class="form-control" id="guide" type="text" name="guide" value="${qData.guide}" placeholder="ガイドブックの評価" />
       <br>
-      <input class="form-control" id="time" type="text" name="time" value="${qData.time}" placeholder="対応時間" />
+      <input class="form-control" id="time" type="number" name="time" value="${qData.time}" placeholder="対応時間（約何分）" />
       <br>
       <input class="form-control" id="comment" type="text" name="comment" value="${qData.comment}" placeholder="コメント（オプション）" />
      </div>
 
-    <button type="submit" class="btn btn-primary">登録</button>　<!--フォームに入力されたコメントを登録する。-->
+    <button type="submit" class="btn btn-primary">登録</button> <!--フォームに入力されたコメントを登録する。-->
 </form>
 
 <form action="@{cancel_add_question_data()}" method="POST"> <!-- コメントキャンセルのcgiを呼び込む -->
     <input type="hidden" name="id_of_QuestionData" value="${qData.id}" /> <!-- 学生番号を送る(非表示)-->
-    <button type="submit" class="btn btn-danger">登録キャンセル</button>　<!-- 直前に登録された質問dataを削除する。 -->
+    <button type="submit" class="btn btn-danger">登録キャンセル</button> <!-- 直前に登録された質問dataを削除する。 -->
+</form>

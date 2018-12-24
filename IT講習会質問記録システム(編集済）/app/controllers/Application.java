@@ -68,8 +68,10 @@ public class Application extends Controller {
         renderTemplate("Application/add_question_data.html", location, qitem_root, qData); //add_question_data.html.
     }
 
-    public static void add_comment(Long id_of_QuestionData, String comment){
+    public static void add_comment(Long id_of_QuestionData, String guide, Long time, String comment){
         QuestionData qData = QuestionData.findById(id_of_QuestionData);
+        qData.guide = guide;
+        qData.time = time;
         qData.comment = comment;
         qData.save();
         session.put("id_of_QuestionData", id_of_QuestionData);
